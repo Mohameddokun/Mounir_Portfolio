@@ -9,14 +9,17 @@ let currentSlide = 0;
 
 // Typing effect for hero section
 const typedTextSpan = document.querySelector(".typed-text");
-// --- UPDATED PHRASES FOR TEACHER ---
 const phrases = ["a Teacher", "an Educator", "a Motivator"];
 let phraseIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
-const typingSpeed = 100; // milliseconds per character
-const deletingSpeed = 50; // milliseconds per character
-const delayBetweenPhrases = 1500; // milliseconds
+
+const typingSpeed = 100;
+const deletingSpeed = 50;
+const delayBetweenPhrases = 1500;
+
+
+let typingStarted = false;
 
 function type() {
   if (!typedTextSpan) return; // Exit if element not found
@@ -61,13 +64,15 @@ function showSlide(index) {
   window.location.hash = `slide-${index}`;
 
   // Start typing effect if the first slide is active
-  if (index === 0) {
-    // Reset typing effect when returning to slide 0
-    charIndex = 0;
-    isDeleting = false;
-    phraseIndex = 0;
-    if (typedTextSpan) typedTextSpan.textContent = ''; // Clear content before starting
-    setTimeout(type, typingSpeed); // Start typing after a short delay
+    if (index === 0) {
+      if (!typingStarted) {
+          typingStarted = true;
+          charIndex = 0;
+          isDeleting = false;
+          phraseIndex = 0;
+          if (typedTextSpan) typedTextSpan.textContent = '';
+          setTimeout(type, typingSpeed);
+      }
   }
 }
 
